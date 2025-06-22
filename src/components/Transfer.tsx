@@ -68,24 +68,26 @@ export function Transfer({ onClose }: TransferProps) {
         backgroundColor: "rgba(0, 0, 0, 0.5)",
       }}
     >
-      <Card className="w-full max-w-md gradient-card shadow-colorful border-0">
+      <Card className="w-full max-w-md gradient-card shadow-colorful border-0 animate-bounce-in hover-glow">
         <CardHeader>
-          <CardTitle className="text-white text-2xl">Transfer Money</CardTitle>
-          <CardDescription className="text-white/80">
+          <CardTitle className="text-white text-2xl animate-fade-in">
+            Transfer Money
+          </CardTitle>
+          <CardDescription className="text-white/80 animate-fade-in animate-delay-100">
             Send money between your accounts
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* From Account */}
-            <div>
+            <div className="animate-fade-in-up animate-delay-200">
               <label className="text-sm font-medium mb-2 block text-white">
                 From Account
               </label>
               <select
                 value={fromAccount}
                 onChange={(e) => setFromAccount(e.target.value)}
-                className="w-full p-3 border rounded-lg bg-white/10 backdrop-blur-sm text-white border-white/20"
+                className="w-full p-3 border rounded-lg bg-white/10 backdrop-blur-sm text-white border-white/20 hover:bg-white/20 transition-all duration-300"
                 required
               >
                 <option value="">Select account</option>
@@ -98,14 +100,14 @@ export function Transfer({ onClose }: TransferProps) {
             </div>
 
             {/* To Account */}
-            <div>
+            <div className="animate-fade-in-up animate-delay-300">
               <label className="text-sm font-medium mb-2 block text-white">
                 To Account
               </label>
               <select
                 value={toAccount}
                 onChange={(e) => setToAccount(e.target.value)}
-                className="w-full p-3 border rounded-lg bg-white/10 backdrop-blur-sm text-white border-white/20"
+                className="w-full p-3 border rounded-lg bg-white/10 backdrop-blur-sm text-white border-white/20 hover:bg-white/20 transition-all duration-300"
                 required
               >
                 <option value="">Select account</option>
@@ -120,7 +122,7 @@ export function Transfer({ onClose }: TransferProps) {
             </div>
 
             {/* Amount */}
-            <div>
+            <div className="animate-fade-in-up animate-delay-500">
               <label className="text-sm font-medium mb-2 block text-white">
                 Amount
               </label>
@@ -130,13 +132,13 @@ export function Transfer({ onClose }: TransferProps) {
                 placeholder="0.00"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                className="bg-white/10 backdrop-blur-sm text-white border-white/20 placeholder:text-white/50"
+                className="bg-white/10 backdrop-blur-sm text-white border-white/20 placeholder:text-white/50 hover:bg-white/20 transition-all duration-300 focus:scale-105"
                 required
               />
             </div>
 
             {/* Description */}
-            <div>
+            <div className="animate-fade-in-up animate-delay-500">
               <label className="text-sm font-medium mb-2 block text-white">
                 Description (Optional)
               </label>
@@ -144,14 +146,14 @@ export function Transfer({ onClose }: TransferProps) {
                 placeholder="What's this transfer for?"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="bg-white/10 backdrop-blur-sm text-white border-white/20 placeholder:text-white/50"
+                className="bg-white/10 backdrop-blur-sm text-white border-white/20 placeholder:text-white/50 hover:bg-white/20 transition-all duration-300 focus:scale-105"
               />
             </div>
 
             {/* Transfer Preview */}
             {fromAccount && toAccount && transferAmount > 0 && (
-              <div className="bg-white/10 backdrop-blur-sm p-4 rounded-lg border border-white/20">
-                <h3 className="font-medium mb-3 text-white">
+              <div className="bg-white/10 backdrop-blur-sm p-4 rounded-lg border border-white/20 animate-bounce-in hover-glow">
+                <h3 className="font-medium mb-3 text-white animate-pulse-slow">
                   Transfer Summary
                 </h3>
                 <div className="flex items-center justify-between text-sm">
@@ -167,11 +169,11 @@ export function Transfer({ onClose }: TransferProps) {
                       </>
                     )}
                   </div>
-                  <ArrowRight className="h-4 w-4 text-white" />
+                  <ArrowRight className="h-4 w-4 text-white animate-pulse-slow" />
                   <div className="flex items-center space-x-2">
                     {selectedToAccount && (
                       <>
-                        <div className="p-1 bg-white/20 rounded">
+                        <div className="p-1 bg-white/20 rounded animate-spin-slow">
                           {getAccountIcon(selectedToAccount.type)}
                         </div>
                         <span className="text-white">
@@ -184,7 +186,7 @@ export function Transfer({ onClose }: TransferProps) {
                 <div className="mt-3 pt-3 border-t border-white/20">
                   <div className="flex justify-between text-sm">
                     <span className="text-white/80">Amount:</span>
-                    <span className="font-medium text-white">
+                    <span className="font-medium text-white animate-number">
                       {formatCurrency(transferAmount)}
                     </span>
                   </div>
@@ -197,17 +199,17 @@ export function Transfer({ onClose }: TransferProps) {
             )}
 
             {/* Actions */}
-            <div className="flex space-x-3">
+            <div className="flex space-x-3 animate-fade-in-up">
               <Button
                 type="button"
-                className="flex-1 bg-white/20 backdrop-blur-sm text-white border-white/30 hover:bg-white/30"
+                className="flex-1 bg-white/20 backdrop-blur-sm text-white border-white/30 hover:bg-white/30 hover:scale-105 transition-all duration-300"
                 onClick={onClose}
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
-                className="flex-1 bg-gradient-to-r from-green-400 to-emerald-500 text-white shadow-blue hover:scale-105 transition-transform"
+                className="flex-1 bg-gradient-to-r from-green-400 to-emerald-500 text-white shadow-blue hover:scale-110 transition-all duration-300 hover-glow animate-pulse-slow"
                 disabled={!fromAccount || !toAccount || !amount || isSubmitting}
               >
                 {isSubmitting ? "Processing..." : "Transfer"}
