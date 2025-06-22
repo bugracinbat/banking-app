@@ -1,6 +1,12 @@
 # NeoBank - Modern Banking Application
 
-A beautiful, modern banking application built with React, Vite, and TypeScript. Features a Vercel-inspired design with next-generation banking functionality.
+A beautiful, modern banking application built with React, Vite, and TypeScript. Features a colorful, professional design with next-generation banking functionality.
+
+## 📸 Screenshot
+
+![NeoBank Dashboard](./screenshots/dashboard.png)
+
+_Modern banking interface with colorful gradients, glass effects, and professional design_
 
 ## ✨ Features
 
@@ -70,13 +76,15 @@ src/
 
 ## 🎨 Design System
 
-The application uses a comprehensive design system inspired by Vercel's aesthetic:
+The application uses a comprehensive design system with a modern, colorful aesthetic:
 
-- **Color Palette**: Carefully selected colors with dark/light mode support
-- **Typography**: Modern, readable font choices
-- **Spacing**: Consistent spacing scale
-- **Components**: Reusable, accessible components
+- **Color Palette**: Vibrant gradients with professional slate background
+- **Glass Effects**: Translucent cards with backdrop blur
+- **Typography**: Modern, readable font choices with proper contrast
+- **Spacing**: Consistent spacing scale with colorful shadows
+- **Components**: Reusable, accessible components with hover animations
 - **Icons**: Lucide React icon library
+- **Animations**: Smooth transitions and interactive elements
 
 ## 🔒 Security Features
 
