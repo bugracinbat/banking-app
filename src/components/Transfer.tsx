@@ -68,22 +68,24 @@ export function Transfer({ onClose }: TransferProps) {
         backgroundColor: "rgba(0, 0, 0, 0.5)",
       }}
     >
-      <Card className="w-full max-w-md bg-white">
+      <Card className="w-full max-w-md gradient-card shadow-colorful border-0">
         <CardHeader>
-          <CardTitle>Transfer Money</CardTitle>
-          <CardDescription>Send money between your accounts</CardDescription>
+          <CardTitle className="text-white text-2xl">Transfer Money</CardTitle>
+          <CardDescription className="text-white/80">
+            Send money between your accounts
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* From Account */}
             <div>
-              <label className="text-sm font-medium mb-2 block">
+              <label className="text-sm font-medium mb-2 block text-white">
                 From Account
               </label>
               <select
                 value={fromAccount}
                 onChange={(e) => setFromAccount(e.target.value)}
-                className="w-full p-3 border rounded-lg bg-background"
+                className="w-full p-3 border rounded-lg bg-white/10 backdrop-blur-sm text-white border-white/20"
                 required
               >
                 <option value="">Select account</option>
@@ -97,13 +99,13 @@ export function Transfer({ onClose }: TransferProps) {
 
             {/* To Account */}
             <div>
-              <label className="text-sm font-medium mb-2 block">
+              <label className="text-sm font-medium mb-2 block text-white">
                 To Account
               </label>
               <select
                 value={toAccount}
                 onChange={(e) => setToAccount(e.target.value)}
-                className="w-full p-3 border rounded-lg bg-background"
+                className="w-full p-3 border rounded-lg bg-white/10 backdrop-blur-sm text-white border-white/20"
                 required
               >
                 <option value="">Select account</option>
@@ -119,66 +121,76 @@ export function Transfer({ onClose }: TransferProps) {
 
             {/* Amount */}
             <div>
-              <label className="text-sm font-medium mb-2 block">Amount</label>
+              <label className="text-sm font-medium mb-2 block text-white">
+                Amount
+              </label>
               <Input
                 type="number"
                 step="0.01"
                 placeholder="0.00"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
+                className="bg-white/10 backdrop-blur-sm text-white border-white/20 placeholder:text-white/50"
                 required
               />
             </div>
 
             {/* Description */}
             <div>
-              <label className="text-sm font-medium mb-2 block">
+              <label className="text-sm font-medium mb-2 block text-white">
                 Description (Optional)
               </label>
               <Input
                 placeholder="What's this transfer for?"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
+                className="bg-white/10 backdrop-blur-sm text-white border-white/20 placeholder:text-white/50"
               />
             </div>
 
             {/* Transfer Preview */}
             {fromAccount && toAccount && transferAmount > 0 && (
-              <div className="bg-secondary p-4 rounded-lg">
-                <h3 className="font-medium mb-3">Transfer Summary</h3>
+              <div className="bg-white/10 backdrop-blur-sm p-4 rounded-lg border border-white/20">
+                <h3 className="font-medium mb-3 text-white">
+                  Transfer Summary
+                </h3>
                 <div className="flex items-center justify-between text-sm">
                   <div className="flex items-center space-x-2">
                     {selectedFromAccount && (
                       <>
-                        <div className="p-1 bg-background rounded">
+                        <div className="p-1 bg-white/20 rounded">
                           {getAccountIcon(selectedFromAccount.type)}
                         </div>
-                        <span>{selectedFromAccount.name}</span>
+                        <span className="text-white">
+                          {selectedFromAccount.name}
+                        </span>
                       </>
                     )}
                   </div>
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-4 w-4 text-white" />
                   <div className="flex items-center space-x-2">
                     {selectedToAccount && (
                       <>
-                        <div className="p-1 bg-background rounded">
+                        <div className="p-1 bg-white/20 rounded">
                           {getAccountIcon(selectedToAccount.type)}
                         </div>
-                        <span>{selectedToAccount.name}</span>
+                        <span className="text-white">
+                          {selectedToAccount.name}
+                        </span>
                       </>
                     )}
                   </div>
                 </div>
-                <div className="mt-3 pt-3 border-t">
+                <div className="mt-3 pt-3 border-t border-white/20">
                   <div className="flex justify-between text-sm">
-                    <span>Amount:</span>
-                    <span className="font-medium">
+                    <span className="text-white/80">Amount:</span>
+                    <span className="font-medium text-white">
                       {formatCurrency(transferAmount)}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm mt-1">
-                    <span>Fee:</span>
-                    <span className="text-green-600">Free</span>
+                    <span className="text-white/80">Fee:</span>
+                    <span className="text-green-300 font-medium">Free</span>
                   </div>
                 </div>
               </div>
@@ -188,15 +200,14 @@ export function Transfer({ onClose }: TransferProps) {
             <div className="flex space-x-3">
               <Button
                 type="button"
-                variant="outline"
-                className="flex-1"
+                className="flex-1 bg-white/20 backdrop-blur-sm text-white border-white/30 hover:bg-white/30"
                 onClick={onClose}
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
-                className="flex-1"
+                className="flex-1 bg-gradient-to-r from-green-400 to-emerald-500 text-white shadow-blue hover:scale-105 transition-transform"
                 disabled={!fromAccount || !toAccount || !amount || isSubmitting}
               >
                 {isSubmitting ? "Processing..." : "Transfer"}

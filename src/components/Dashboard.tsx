@@ -48,17 +48,17 @@ export function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen gradient-professional">
       {/* Header */}
-      <header className="border-b bg-card">
+      <header className="border-b glass-effect shadow-colorful">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <CreditCard className="h-5 w-5 text-primary-foreground" />
+                <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center shadow-colorful">
+                  <CreditCard className="h-5 w-5 text-white" />
                 </div>
-                <span className="text-xl font-bold">NeoBank</span>
+                <span className="text-xl font-bold text-white">NeoBank</span>
               </div>
             </div>
             <div className="flex items-center space-x-4">
@@ -66,9 +66,11 @@ export function Dashboard() {
                 <img
                   src={mockUser.avatar}
                   alt={mockUser.name}
-                  className="w-8 h-8 rounded-full"
+                  className="w-8 h-8 rounded-full ring-2 ring-white/50"
                 />
-                <span className="text-sm font-medium">{mockUser.name}</span>
+                <span className="text-sm font-medium text-white">
+                  {mockUser.name}
+                </span>
               </div>
             </div>
           </div>
@@ -78,26 +80,26 @@ export function Dashboard() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Section */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">
+          <h1 className="text-3xl font-bold mb-2 text-white drop-shadow-lg">
             Good morning, {mockUser.name.split(" ")[0]}!
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white/80 text-lg">
             Here's your financial overview for today.
           </p>
         </div>
 
         {/* Total Balance Card */}
-        <Card className="mb-8 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground">
+        <Card className="mb-8 gradient-card animate-gradient text-white shadow-colorful">
           <CardHeader>
             <div className="flex justify-between items-center">
-              <CardTitle className="text-primary-foreground/90">
+              <CardTitle className="text-white text-2xl">
                 Total Balance
               </CardTitle>
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setShowBalance(!showBalance)}
-                className="text-primary-foreground/90 hover:bg-primary-foreground/10"
+                className="text-white/90 hover:bg-white/10 shadow-pink"
               >
                 {showBalance ? (
                   <Eye className="h-4 w-4" />
@@ -108,31 +110,31 @@ export function Dashboard() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-4xl font-bold mb-4">
+            <div className="text-5xl font-bold mb-4 drop-shadow-lg">
               {showBalance ? formatCurrency(totalBalance) : "••••••"}
             </div>
-            <p className="text-primary-foreground/80">Across all accounts</p>
+            <p className="text-white/90 text-lg">Across all accounts</p>
           </CardContent>
         </Card>
 
         {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
           <Button
-            className="h-16 flex-col space-y-2"
+            className="h-16 flex-col space-y-2 gradient-primary shadow-colorful hover:scale-105 transition-transform"
             onClick={() => setShowTransfer(true)}
           >
             <Send className="h-5 w-5" />
             <span>Transfer</span>
           </Button>
-          <Button variant="outline" className="h-16 flex-col space-y-2">
+          <Button className="h-16 flex-col space-y-2 bg-gradient-to-r from-green-400 to-emerald-500 text-white shadow-blue hover:scale-105 transition-transform">
             <Plus className="h-5 w-5" />
             <span>Add Money</span>
           </Button>
-          <Button variant="outline" className="h-16 flex-col space-y-2">
+          <Button className="h-16 flex-col space-y-2 bg-gradient-to-r from-orange-400 to-red-500 text-white shadow-pink hover:scale-105 transition-transform">
             <CreditCard className="h-5 w-5" />
             <span>Pay Bills</span>
           </Button>
-          <Button variant="outline" className="h-16 flex-col space-y-2">
+          <Button className="h-16 flex-col space-y-2 bg-gradient-to-r from-purple-400 to-indigo-500 text-white shadow-colorful hover:scale-105 transition-transform">
             <TrendingUp className="h-5 w-5" />
             <span>Invest</span>
           </Button>
@@ -141,36 +143,40 @@ export function Dashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Accounts Overview */}
           <div className="lg:col-span-2">
-            <Card>
+            <Card className="glass-effect border-white/20 shadow-colorful">
               <CardHeader>
-                <CardTitle>Your Accounts</CardTitle>
-                <CardDescription>Overview of all your accounts</CardDescription>
+                <CardTitle className="text-white">Your Accounts</CardTitle>
+                <CardDescription className="text-white/80">
+                  Overview of all your accounts
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   {mockAccounts.map((account) => (
                     <div
                       key={account.id}
-                      className="flex items-center justify-between p-4 border rounded-lg"
+                      className={`flex items-center justify-between p-4 rounded-lg account-${account.type} text-white shadow-lg hover:scale-105 transition-transform`}
                     >
                       <div className="flex items-center space-x-3">
-                        <div className="p-2 bg-secondary rounded-lg">
+                        <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
                           {getAccountIcon(account.type)}
                         </div>
                         <div>
-                          <h3 className="font-semibold">{account.name}</h3>
-                          <p className="text-sm text-muted-foreground">
+                          <h3 className="font-semibold text-white">
+                            {account.name}
+                          </h3>
+                          <p className="text-sm text-white/80">
                             {account.accountNumber}
                           </p>
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="font-semibold">
+                        <p className="font-semibold text-white text-lg">
                           {showBalance
                             ? formatCurrency(account.balance)
                             : "••••••"}
                         </p>
-                        <p className="text-sm text-muted-foreground capitalize">
+                        <p className="text-sm text-white/80 capitalize font-medium">
                           {account.type}
                         </p>
                       </div>
@@ -183,14 +189,22 @@ export function Dashboard() {
 
           {/* Recent Transactions */}
           <div>
-            <Card>
+            <Card className="glass-effect border-white/20 shadow-blue">
               <CardHeader>
                 <div className="flex justify-between items-center">
                   <div>
-                    <CardTitle>Recent Transactions</CardTitle>
-                    <CardDescription>Your latest activity</CardDescription>
+                    <CardTitle className="text-white">
+                      Recent Transactions
+                    </CardTitle>
+                    <CardDescription className="text-white/80">
+                      Your latest activity
+                    </CardDescription>
                   </div>
-                  <Button variant="ghost" size="icon">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-white/80 hover:bg-white/10"
+                  >
                     <MoreHorizontal className="h-4 w-4" />
                   </Button>
                 </div>
@@ -200,14 +214,14 @@ export function Dashboard() {
                   {recentTransactions.map((transaction) => (
                     <div
                       key={transaction.id}
-                      className="flex items-center justify-between"
+                      className="flex items-center justify-between p-3 rounded-lg bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all"
                     >
                       <div className="flex items-center space-x-3">
                         <div
                           className={`p-2 rounded-lg ${
                             transaction.type === "credit"
-                              ? "bg-green-100 text-green-600"
-                              : "bg-red-100 text-red-600"
+                              ? "bg-green-400/20 text-green-200"
+                              : "bg-red-400/20 text-red-200"
                           }`}
                         >
                           {transaction.type === "credit" ? (
@@ -217,10 +231,10 @@ export function Dashboard() {
                           )}
                         </div>
                         <div>
-                          <p className="font-medium">
+                          <p className="font-medium text-white">
                             {transaction.description}
                           </p>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-sm text-white/70">
                             {formatDate(transaction.date)}
                           </p>
                         </div>
@@ -229,17 +243,15 @@ export function Dashboard() {
                         <p
                           className={`font-semibold ${
                             transaction.type === "credit"
-                              ? "text-green-600"
-                              : "text-red-600"
+                              ? "text-green-300"
+                              : "text-red-300"
                           }`}
                         >
                           {transaction.type === "credit" ? "+" : ""}
                           {formatCurrency(Math.abs(transaction.amount))}
                         </p>
                         {transaction.pending && (
-                          <p className="text-xs text-muted-foreground">
-                            Pending
-                          </p>
+                          <p className="text-xs text-yellow-300">Pending</p>
                         )}
                       </div>
                     </div>

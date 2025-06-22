@@ -1,1 +1,149 @@
 @import "tailwindcss";
+
+:root {
+  /* Colorful Banking Theme */
+  --primary: 270 95% 68%; /* Vibrant Purple */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 340 100% 50%; /* Bright Pink */
+  --secondary-foreground: 0 0% 100%;
+  --accent: 220 100% 60%; /* Electric Blue */
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 85% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --muted: 210 40% 98%;
+  --muted-foreground: 215 25% 27%;
+  --card: 0 0% 100%;
+  --card-foreground: 224 71% 4%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 224 71% 4%;
+  --border: 220 13% 91%;
+  --input: 220 13% 91%;
+  --ring: 270 95% 68%;
+  --background: 220 65% 97%;
+  --foreground: 224 71% 4%;
+
+  /* Custom gradient colors */
+  --gradient-start: 270 100% 70%;
+  --gradient-middle: 320 100% 60%;
+  --gradient-end: 40 100% 60%;
+
+  /* Account type colors */
+  --checking-color: 190 100% 50%;
+  --savings-color: 120 100% 40%;
+  --credit-color: 340 100% 50%;
+  --investment-color: 280 100% 60%;
+}
+
+/* Gradient backgrounds */
+.gradient-primary {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--primary)),
+    hsl(var(--secondary))
+  );
+}
+
+.gradient-rainbow {
+  background: linear-gradient(
+    135deg,
+    #1e293b 0%,
+    #334155 25%,
+    #475569 50%,
+    #64748b 75%,
+    #94a3b8 100%
+  );
+}
+
+.gradient-professional {
+  background: linear-gradient(
+    135deg,
+    #0f172a 0%,
+    #1e293b 30%,
+    #334155 60%,
+    #475569 100%
+  );
+}
+
+.gradient-card {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--primary)) 0%,
+    hsl(var(--accent)) 50%,
+    hsl(var(--secondary)) 100%
+  );
+}
+
+/* Account type specific styles */
+.account-checking {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--checking-color)),
+    hsl(var(--checking-color)) 80%
+  );
+  border-left: 4px solid hsl(var(--checking-color));
+}
+
+.account-savings {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--savings-color)),
+    hsl(var(--savings-color)) 80%
+  );
+  border-left: 4px solid hsl(var(--savings-color));
+}
+
+.account-credit {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--credit-color)),
+    hsl(var(--credit-color)) 80%
+  );
+  border-left: 4px solid hsl(var(--credit-color));
+}
+
+.account-investment {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--investment-color)),
+    hsl(var(--investment-color)) 80%
+  );
+  border-left: 4px solid hsl(var(--investment-color));
+}
+
+/* Animated elements */
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-animation 4s ease-in-out infinite;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Glass effect */
+.glass-effect {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Colorful shadows */
+.shadow-colorful {
+  box-shadow: 0 8px 32px hsla(var(--primary), 0.3);
+}
+
+.shadow-pink {
+  box-shadow: 0 8px 32px hsla(var(--secondary), 0.3);
+}
+
+.shadow-blue {
+  box-shadow: 0 8px 32px hsla(var(--accent), 0.3);
+}
