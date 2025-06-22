@@ -8,6 +8,10 @@ import {
 } from "./ui/card";
 import { Button } from "./ui/button";
 import { Transfer } from "./Transfer";
+import { AddMoney } from "./AddMoney";
+import { PayBills } from "./PayBills";
+import { Invest } from "./Invest";
+import { TransactionDetails } from "./TransactionDetails";
 import { mockAccounts, mockTransactions, mockUser } from "../data/mockData";
 import { formatCurrency, formatDate } from "../lib/utils";
 import {
@@ -25,6 +29,11 @@ import {
 export function Dashboard() {
   const [showBalance, setShowBalance] = React.useState(true);
   const [showTransfer, setShowTransfer] = React.useState(false);
+  const [showAddMoney, setShowAddMoney] = React.useState(false);
+  const [showPayBills, setShowPayBills] = React.useState(false);
+  const [showInvest, setShowInvest] = React.useState(false);
+  const [selectedTransaction, setSelectedTransaction] =
+    React.useState<any>(null);
 
   const totalBalance = mockAccounts.reduce(
     (sum, account) => sum + account.balance,
@@ -128,15 +137,24 @@ export function Dashboard() {
             <Send className="h-5 w-5 animate-pulse-slow" />
             <span>Transfer</span>
           </Button>
-          <Button className="h-16 flex-col space-y-2 bg-gradient-to-r from-green-400 to-emerald-500 text-white shadow-blue hover:scale-110 transition-all duration-300 hover-lift animate-bounce-in animate-delay-200">
+          <Button
+            className="h-16 flex-col space-y-2 bg-gradient-to-r from-green-400 to-emerald-500 text-white shadow-blue hover:scale-110 transition-all duration-300 hover-lift animate-bounce-in animate-delay-200"
+            onClick={() => setShowAddMoney(true)}
+          >
             <Plus className="h-5 w-5 animate-spin-slow" />
             <span>Add Money</span>
           </Button>
-          <Button className="h-16 flex-col space-y-2 bg-gradient-to-r from-orange-400 to-red-500 text-white shadow-pink hover:scale-110 transition-all duration-300 hover-glow animate-bounce-in animate-delay-300">
+          <Button
+            className="h-16 flex-col space-y-2 bg-gradient-to-r from-orange-400 to-red-500 text-white shadow-pink hover:scale-110 transition-all duration-300 hover-glow animate-bounce-in animate-delay-300"
+            onClick={() => setShowPayBills(true)}
+          >
             <CreditCard className="h-5 w-5 animate-pulse-slow" />
             <span>Pay Bills</span>
           </Button>
-          <Button className="h-16 flex-col space-y-2 bg-gradient-to-r from-purple-400 to-indigo-500 text-white shadow-colorful hover:scale-110 transition-all duration-300 hover-lift animate-bounce-in animate-delay-500">
+          <Button
+            className="h-16 flex-col space-y-2 bg-gradient-to-r from-purple-400 to-indigo-500 text-white shadow-colorful hover:scale-110 transition-all duration-300 hover-lift animate-bounce-in animate-delay-500"
+            onClick={() => setShowInvest(true)}
+          >
             <TrendingUp className="h-5 w-5 animate-spin-slow" />
             <span>Invest</span>
           </Button>
@@ -224,7 +242,8 @@ export function Dashboard() {
                       key={transaction.id}
                       className={`flex items-center justify-between p-3 rounded-lg bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 hover:scale-105 hover-glow animate-fade-in-up animate-delay-${
                         (index + 2) * 100
-                      }`}
+                      } cursor-pointer`}
+                      onClick={() => setSelectedTransaction(transaction)}
                     >
                       <div className="flex items-center space-x-3">
                         <div
@@ -273,8 +292,17 @@ export function Dashboard() {
         </div>
       </main>
 
-      {/* Transfer Modal */}
+      {/* Modals */}
       {showTransfer && <Transfer onClose={() => setShowTransfer(false)} />}
+      {showAddMoney && <AddMoney onClose={() => setShowAddMoney(false)} />}
+      {showPayBills && <PayBills onClose={() => setShowPayBills(false)} />}
+      {showInvest && <Invest onClose={() => setShowInvest(false)} />}
+      {selectedTransaction && (
+        <TransactionDetails
+          transaction={selectedTransaction}
+          onClose={() => setSelectedTransaction(null)}
+        />
+      )}
     </div>
   );
 }
