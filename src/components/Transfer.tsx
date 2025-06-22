@@ -1,4 +1,5 @@
 import React from "react";
+import { createPortal } from "react-dom";
 import {
   Card,
   CardContent,
@@ -54,9 +55,20 @@ export function Transfer({ onClose }: TransferProps) {
   const selectedToAccount = mockAccounts.find((acc) => acc.id === toAccount);
   const transferAmount = parseFloat(amount) || 0;
 
-  return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <Card className="w-full max-w-md">
+  const modalContent = (
+    <div
+      className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-[9999]"
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 9999,
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+      }}
+    >
+      <Card className="w-full max-w-md bg-white">
         <CardHeader>
           <CardTitle>Transfer Money</CardTitle>
           <CardDescription>Send money between your accounts</CardDescription>
@@ -195,4 +207,6 @@ export function Transfer({ onClose }: TransferProps) {
       </Card>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 }
