@@ -155,7 +155,7 @@ function generateMockBookings(count: number) {
       "booked",
       "cancelled",
       "completed",
-    ]);
+    ]) as "booked" | "cancelled" | "completed";
     const notes = faker.lorem.sentence();
     const rating = faker.number.float({ min: 3, max: 5, precision: 0.1 });
     const thumbnail = faker.image.urlPicsumPhotos({ width: 400, height: 300 });
