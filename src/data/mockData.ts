@@ -5,6 +5,7 @@ import type {
   Goal,
   Booking,
 } from "../types/banking";
+import { faker } from "@faker-js/faker";
 
 export const mockUser: User = {
   id: "1",
@@ -140,27 +141,48 @@ export const mockGoals: Goal[] = [
   },
 ];
 
-export const mockBookings: Booking[] = [
-  {
-    id: "1",
-    userId: "1",
-    type: "flight",
-    destination: "Paris, France",
-    startDate: new Date("2024-07-10"),
-    endDate: new Date("2024-07-20"),
-    amount: 1200.0,
-    status: "booked",
-    notes: "Direct flight, window seat requested.",
-  },
-  {
-    id: "2",
-    userId: "1",
-    type: "hotel",
-    destination: "Paris, France",
-    startDate: new Date("2024-07-10"),
-    endDate: new Date("2024-07-20"),
-    amount: 1800.0,
-    status: "booked",
-    notes: "5-star hotel, breakfast included.",
-  },
-];
+function generateMockBookings(count: number) {
+  const bookings = [];
+  for (let i = 0; i < count; i++) {
+    const type = faker.helpers.arrayElement(["flight", "hotel"]) as
+      | "flight"
+      | "hotel";
+    const destination = faker.location.city() + ", " + faker.location.country();
+    const startDate = faker.date.soon({ days: 60 });
+    const endDate = faker.date.soon({ days: 90, refDate: startDate });
+    const amount = faker.number.float({ min: 100, max: 3000, precision: 0.01 });
+    const status = faker.helpers.arrayElement([
+      "booked",
+      "cancelled",
+      "completed",
+    ]);
+    const notes = faker.lorem.sentence();
+    const rating = faker.number.float({ min: 3, max: 5, precision: 0.1 });
+    const thumbnail = faker.image.urlPicsumPhotos({ width: 400, height: 300 });
+    let hotelName = undefined;
+    let airline = undefined;
+    if (type === "hotel") {
+      hotelName = faker.company.name() + " Hotel";
+    } else {
+      airline = faker.company.name() + " Airlines";
+    }
+    bookings.push({
+      id: faker.string.uuid(),
+      userId: "1",
+      type,
+      destination,
+      startDate,
+      endDate,
+      amount,
+      status,
+      notes,
+      rating,
+      thumbnail,
+      hotelName,
+      airline,
+    });
+  }
+  return bookings;
+}
+
+export const mockBookings = generateMockBookings(120);
