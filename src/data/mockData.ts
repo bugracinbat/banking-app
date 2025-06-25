@@ -1,4 +1,10 @@
-import type { Account, Transaction, User, Goal } from "../types/banking";
+import type {
+  Account,
+  Transaction,
+  User,
+  Goal,
+  Booking,
+} from "../types/banking";
 
 export const mockUser: User = {
   id: "1",
@@ -131,5 +137,30 @@ export const mockGoals: Goal[] = [
     currentAmount: 3200,
     targetDate: new Date("2025-03-01"),
     category: "Transportation",
+  },
+];
+
+export const mockBookings: Booking[] = [
+  {
+    id: "1",
+    userId: "1",
+    type: "flight",
+    destination: "Paris, France",
+    startDate: new Date("2024-07-10"),
+    endDate: new Date("2024-07-20"),
+    amount: 1200.0,
+    status: "booked",
+    notes: "Direct flight, window seat requested.",
+  },
+  {
+    id: "2",
+    userId: "1",
+    type: "hotel",
+    destination: "Paris, France",
+    startDate: new Date("2024-07-10"),
+    endDate: new Date("2024-07-20"),
+    amount: 1800.0,
+    status: "booked",
+    notes: "5-star hotel, breakfast included.",
   },
 ];

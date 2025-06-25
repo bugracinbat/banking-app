@@ -44,3 +44,15 @@ export interface Goal {
   targetDate: Date;
   category: string;
 }
+
+export interface Booking {
+  id: string;
+  userId: string;
+  type: "flight" | "hotel";
+  destination: string;
+  startDate: Date;
+  endDate: Date;
+  amount: number;
+  status: "booked" | "cancelled" | "completed";
+  notes?: string;
+}

@@ -12,6 +12,7 @@ import { AddMoney } from "./AddMoney";
 import { PayBills } from "./PayBills";
 import { Invest } from "./Invest";
 import { TransactionDetails } from "./TransactionDetails";
+import { Booking } from "./Booking";
 import { mockAccounts, mockTransactions, mockUser } from "../data/mockData";
 import { formatCurrency, formatDate } from "../lib/utils";
 import {
@@ -25,6 +26,7 @@ import {
   EyeOff,
   MoreHorizontal,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export function Dashboard() {
   const [showBalance, setShowBalance] = React.useState(true);
@@ -32,6 +34,7 @@ export function Dashboard() {
   const [showAddMoney, setShowAddMoney] = React.useState(false);
   const [showPayBills, setShowPayBills] = React.useState(false);
   const [showInvest, setShowInvest] = React.useState(false);
+  const [showBooking, setShowBooking] = React.useState(false);
   const [selectedTransaction, setSelectedTransaction] =
     React.useState<any>(null);
 
@@ -40,6 +43,7 @@ export function Dashboard() {
     0
   );
   const recentTransactions = mockTransactions.slice(0, 5);
+  const navigate = useNavigate();
 
   const getAccountIcon = (type: string) => {
     switch (type) {
@@ -129,7 +133,7 @@ export function Dashboard() {
         </Card>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8 animate-fade-in-up">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8 animate-fade-in-up">
           <Button
             className="h-16 flex-col space-y-2 gradient-primary shadow-colorful hover:scale-110 transition-all duration-300 hover-glow animate-bounce-in animate-delay-100"
             onClick={() => setShowTransfer(true)}
@@ -157,6 +161,15 @@ export function Dashboard() {
           >
             <TrendingUp className="h-5 w-5 animate-spin-slow" />
             <span>Invest</span>
+          </Button>
+          <Button
+            className="h-16 flex-col space-y-2 bg-gradient-to-r from-blue-400 to-cyan-500 text-white shadow-blue hover:scale-110 transition-all duration-300 hover-lift animate-bounce-in animate-delay-600"
+            onClick={() => navigate("/booking")}
+          >
+            <span role="img" aria-label="Travel">
+              ✈️
+            </span>
+            <span>Book Travel</span>
           </Button>
         </div>
 
@@ -303,6 +316,7 @@ export function Dashboard() {
           onClose={() => setSelectedTransaction(null)}
         />
       )}
+      {showBooking && <Booking onClose={() => setShowBooking(false)} />}
     </div>
   );
 }
