@@ -62,34 +62,7 @@ export function Dashboard() {
 
   return (
     <div className="min-h-screen gradient-professional">
-      {/* Header */}
-      <header className="border-b glass-effect shadow-colorful animate-fade-in">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2 animate-fade-in-left">
-                <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center shadow-colorful hover-glow animate-bounce-in">
-                  <CreditCard className="h-5 w-5 text-white animate-pulse-slow" />
-                </div>
-                <span className="text-xl font-bold text-white">NeoBank</span>
-              </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2 animate-fade-in-right">
-                <img
-                  src={mockUser.avatar}
-                  alt={mockUser.name}
-                  className="w-8 h-8 rounded-full ring-2 ring-white/50 hover-lift"
-                />
-                <span className="text-sm font-medium text-white">
-                  {mockUser.name}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
+      {/* Remove old header, navbar is now global */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Section */}
         <div className="mb-8 animate-fade-in-up animate-delay-200">
