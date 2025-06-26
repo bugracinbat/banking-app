@@ -55,4 +55,5 @@ export interface Booking {
   amount: number;
   status: "booked" | "cancelled" | "completed";
   notes?: string;
+  amenities?: string[];
 }

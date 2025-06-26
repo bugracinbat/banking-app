@@ -141,6 +141,16 @@ export const mockGoals: Goal[] = [
   },
 ];
 
+const allAmenities = [
+  "WiFi",
+  "Breakfast",
+  "Pool",
+  "Parking",
+  "Gym",
+  "Spa",
+  "Free Cancellation",
+];
+
 function generateMockBookings(count: number) {
   const bookings = [];
   for (let i = 0; i < count; i++) {
@@ -161,8 +171,10 @@ function generateMockBookings(count: number) {
     const thumbnail = faker.image.urlPicsumPhotos({ width: 400, height: 300 });
     let hotelName = undefined;
     let airline = undefined;
+    let amenities = undefined;
     if (type === "hotel") {
       hotelName = faker.company.name() + " Hotel";
+      amenities = faker.helpers.arrayElements(allAmenities, { min: 2, max: 5 });
     } else {
       airline = faker.company.name() + " Airlines";
     }
@@ -180,6 +192,7 @@ function generateMockBookings(count: number) {
       thumbnail,
       hotelName,
       airline,
+      amenities,
     });
   }
   return bookings;

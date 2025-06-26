@@ -65,6 +65,13 @@ export function BookingPage() {
     };
   }, [drawerOpen]);
 
+  // Clamp price range to ensure min <= max
+  const clampPriceRange = ([min, max]: [number, number]) => {
+    if (min > max) return [max, max];
+    if (max < min) return [min, min];
+    return [min, max];
+  };
+
   React.useEffect(() => {
     let results = mockBookings;
     if (type !== "all") results = results.filter((b) => b.type === type);
@@ -72,26 +79,30 @@ export function BookingPage() {
       results = results.filter((b) =>
         b.destination.toLowerCase().includes(search.toLowerCase())
       );
-    // Filter by price
+
+    // Clamp price range
+    const [minPrice, maxPrice] = clampPriceRange(priceRange);
     results = results.filter(
-      (b) => b.amount >= priceRange[0] && b.amount <= priceRange[1]
+      (b) => b.amount >= minPrice && b.amount <= maxPrice
     );
+
     // Filter by rating
     results = results.filter((b) => b.rating >= minRating);
+
     // Filter by amenities
     if (selectedAmenities.length > 0) {
       results = results.filter((b) =>
-        selectedAmenities.every((a) =>
-          b.notes?.toLowerCase().includes(a.toLowerCase())
-        )
+        selectedAmenities.every((a) => b.amenities?.includes(a))
       );
     }
-    // Filter by free cancellation (mock: if notes include 'free cancellation')
+
+    // Filter by free cancellation
     if (freeCancellation) {
       results = results.filter((b) =>
-        b.notes?.toLowerCase().includes("free cancellation")
+        b.amenities?.includes("Free Cancellation")
       );
     }
+
     // Sorting
     results = [...results].sort((a, b) => {
       if (sort === "price") return a.amount - b.amount;
@@ -138,6 +149,16 @@ export function BookingPage() {
     hotelName: (b as any).hotelName,
     airline: (b as any).airline,
   }));
+
+  const handleClearFilters = () => {
+    setSearch("");
+    setType("all");
+    setSort("price");
+    setPriceRange([100, 3000]);
+    setMinRating(3);
+    setSelectedAmenities([]);
+    setFreeCancellation(false);
+  };
 
   return (
     <div className="min-h-screen gradient-professional p-2 sm:p-4 md:p-6 overflow-x-hidden">
@@ -188,27 +209,22 @@ export function BookingPage() {
               <span className="font-semibold">Status:</span>{" "}
               <span className="capitalize">{selectedBooking.status}</span>
             </div>
-            <div className="mb-2 text-white break-words">
-              <span className="font-semibold">Notes:</span>{" "}
-              {selectedBooking.notes}
-            </div>
             <div className="mb-4">
               <span className="font-semibold text-white">Amenities:</span>
               <ul className="flex flex-wrap gap-2 mt-2">
-                {amenitiesList.map((a) => (
+                {selectedBooking.amenities?.map((a) => (
                   <li
                     key={a}
-                    className={`px-3 py-1 rounded-full border text-xs font-medium ${
-                      selectedBooking.notes
-                        ?.toLowerCase()
-                        .includes(a.toLowerCase())
-                        ? "bg-blue-500 border-blue-500 text-white"
-                        : "bg-white/10 border-white/20 text-white/60"
-                    }`}
+                    className="px-3 py-1 rounded-full border text-xs font-medium bg-blue-500 border-blue-500 text-white"
                   >
                     {a}
                   </li>
                 ))}
+                {!selectedBooking.amenities && (
+                  <li className="text-white/60 text-xs">
+                    No amenities listed.
+                  </li>
+                )}
               </ul>
             </div>
             <Button
@@ -270,7 +286,17 @@ export function BookingPage() {
                     step={10}
                     value={priceRange[0]}
                     onChange={(e) =>
-                      setPriceRange([Number(e.target.value), priceRange[1]])
+                      setPriceRange(
+                        clampPriceRange([
+                          Number(e.target.value),
+                          priceRange[1],
+                        ]) as [number, number]
+                      )
+                    }
+                    onBlur={() =>
+                      setPriceRange(
+                        clampPriceRange(priceRange) as [number, number]
+                      )
                     }
                     className="w-full accent-blue-500"
                   />
@@ -281,7 +307,17 @@ export function BookingPage() {
                     step={10}
                     value={priceRange[1]}
                     onChange={(e) =>
-                      setPriceRange([priceRange[0], Number(e.target.value)])
+                      setPriceRange(
+                        clampPriceRange([
+                          priceRange[0],
+                          Number(e.target.value),
+                        ]) as [number, number]
+                      )
+                    }
+                    onBlur={() =>
+                      setPriceRange(
+                        clampPriceRange(priceRange) as [number, number]
+                      )
                     }
                     className="w-full accent-blue-500"
                   />
@@ -362,6 +398,14 @@ export function BookingPage() {
                   />
                 </button>
               </div>
+              {/* Clear All Button */}
+              <Button
+                type="button"
+                className="w-full bg-red-500/80 text-white hover:bg-red-500"
+                onClick={handleClearFilters}
+              >
+                Clear All Filters
+              </Button>
             </div>
           </div>
         </aside>
@@ -524,9 +568,6 @@ export function BookingPage() {
                         {booking.status}
                       </span>
                     </div>
-                    {booking.notes && (
-                      <div className="mb-2">Notes: {booking.notes}</div>
-                    )}
                     <Button
                       className="bg-blue-500 text-white mt-2 w-full"
                       onClick={() => setSelectedBooking(booking)}
