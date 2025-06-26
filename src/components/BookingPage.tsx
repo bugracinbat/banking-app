@@ -246,16 +246,6 @@ export function BookingPage() {
         )}
         {/* Sidebar/Drawer Filters */}
         <aside className="w-full lg:w-64 mb-4 lg:mb-0">
-          {/* Mobile/Tablet: Drawer */}
-          <div className="lg:hidden mb-4">
-            <Button
-              type="button"
-              className="bg-blue-500 text-white w-full"
-              onClick={() => setDrawerOpen(true)}
-            >
-              Filters
-            </Button>
-          </div>
           <div
             className={`fixed top-0 left-0 h-full w-72 bg-slate-900 glass-effect rounded-r-lg p-4 sm:p-6 text-white z-50 transform transition-transform duration-300 lg:static lg:transform-none lg:w-64 lg:bg-white/10 lg:rounded-lg lg:shadow-none lg:p-6 ${
               drawerOpen ? "translate-x-0" : "-translate-x-full"
@@ -496,23 +486,35 @@ export function BookingPage() {
                     </Button>
                   </div>
                 </div>
-                {/* Sorting */}
-                <div className="flex justify-end mt-4">
-                  <label className="text-white/80 mr-2">Sort by:</label>
-                  <select
-                    value={sort}
-                    onChange={(e) => setSort(e.target.value)}
-                    className="p-2 rounded bg-white/10 text-white border-white/20"
-                  >
-                    <option value="price">Price</option>
-                    <option value="rating">Rating</option>
-                  </select>
-                </div>
               </form>
             </CardContent>
           </Card>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Toolbar for Filters and Sorting */}
+          <div className="flex flex-col sm:flex-row justify-between items-center mb-4 gap-4">
+            <div className="lg:hidden w-full sm:w-auto">
+              <Button
+                type="button"
+                className="bg-blue-500 text-white w-full"
+                onClick={() => setDrawerOpen(true)}
+              >
+                Filters
+              </Button>
+            </div>
+            <div className="flex items-center w-full sm:w-auto justify-end">
+              <label className="text-white/80 mr-2">Sort by:</label>
+              <select
+                value={sort}
+                onChange={(e) => setSort(e.target.value)}
+                className="p-2 rounded bg-white/10 text-white border-white/20"
+              >
+                <option value="price">Price</option>
+                <option value="rating">Rating</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
             {resultsWithExtras.length === 0 && (
               <div className="col-span-2 text-center text-white/70">
                 No bookings found.
