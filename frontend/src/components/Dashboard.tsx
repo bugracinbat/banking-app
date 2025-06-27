@@ -41,9 +41,9 @@ export function Dashboard() {
     React.useState<any>(null);
 
   // Filter accounts and transactions by userId if available
-  const userAccounts = mockAccounts.filter((a) => a.id[0] === currentUser.id); // Example: match by id prefix
-  const userTransactions = mockTransactions.filter((t) =>
-    userAccounts.some((a) => a.id === t.accountId)
+  const userAccounts = mockAccounts.filter((a) => a.userId === currentUser.id);
+  const userTransactions = mockTransactions.filter(
+    (t) => t.userId === currentUser.id
   );
 
   const totalBalance = userAccounts.reduce(

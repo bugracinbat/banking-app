@@ -26,158 +26,42 @@ export const mockUsers: User[] = [
 ];
 
 export const mockAccounts: Account[] = [
-  {
-    id: "1",
-    name: "Primary Checking",
-    type: "checking",
-    balance: 12450.75,
-    accountNumber: "****1234",
-    currency: "USD",
-  },
-  {
-    id: "2",
-    name: "High-Yield Savings",
-    type: "savings",
-    balance: 45892.23,
-    accountNumber: "****5678",
-    currency: "USD",
-  },
-  {
-    id: "3",
-    name: "Travel Credit Card",
-    type: "credit",
-    balance: -2341.87,
-    accountNumber: "****9012",
-    currency: "USD",
-  },
-  {
-    id: "4",
-    name: "Investment Portfolio",
-    type: "investment",
-    balance: 78234.19,
-    accountNumber: "****3456",
-    currency: "USD",
-  },
-  ...Array.from({ length: 6 }).map((_, i) => ({
-    id: `${i + 5}`,
-    name: faker.finance.accountName(),
-    type: faker.helpers.arrayElement([
-      "checking",
-      "savings",
-      "credit",
-      "investment",
-    ]) as "checking" | "savings" | "credit" | "investment",
-    balance: faker.number.float({ min: -5000, max: 100000, precision: 0.01 }),
-    accountNumber: `****${faker.finance.accountNumber().slice(-4)}`,
-    currency: "USD",
-  })),
+  ...mockUsers.flatMap((user, userIdx) =>
+    Array.from({ length: 3 }).map((_, i) => ({
+      id: `${user.id}-${i + 1}`,
+      userId: user.id,
+      name: faker.finance.accountName(),
+      type: faker.helpers.arrayElement([
+        "checking",
+        "savings",
+        "credit",
+        "investment",
+      ]) as "checking" | "savings" | "credit" | "investment",
+      balance: faker.number.float({ min: -5000, max: 100000, precision: 0.01 }),
+      accountNumber: `****${faker.finance.accountNumber().slice(-4)}`,
+      currency: "USD",
+    }))
+  ),
 ];
 
-export const mockTransactions: Transaction[] = [
-  {
-    id: "1",
-    accountId: "1",
-    type: "debit",
-    amount: -89.43,
-    description: "Starbucks Coffee",
-    category: "Food & Dining",
-    date: new Date("2024-06-20"),
-    pending: false,
-  },
-  {
-    id: "2",
-    accountId: "1",
-    type: "credit",
-    amount: 3200.0,
-    description: "Salary Deposit",
-    category: "Income",
-    date: new Date("2024-06-19"),
-    pending: false,
-  },
-  {
-    id: "3",
-    accountId: "1",
-    type: "debit",
-    amount: -1250.0,
-    description: "Rent Payment",
-    category: "Housing",
-    date: new Date("2024-06-18"),
-    pending: false,
-  },
-  {
-    id: "4",
-    accountId: "2",
-    type: "credit",
-    amount: 500.0,
-    description: "Transfer from Checking",
-    category: "Transfer",
-    date: new Date("2024-06-17"),
-    pending: false,
-  },
-  {
-    id: "5",
-    accountId: "3",
-    type: "debit",
-    amount: -156.78,
-    description: "Amazon Purchase",
-    category: "Shopping",
-    date: new Date("2024-06-16"),
-    pending: true,
-  },
-  {
-    id: "6",
-    accountId: "1",
-    type: "debit",
-    amount: -45.2,
-    description: "Gas Station",
-    category: "Transportation",
-    date: new Date("2024-06-15"),
-    pending: false,
-  },
-  ...Array.from({ length: 14 }).map((_, i) => {
-    const accountId = faker.helpers.arrayElement(mockAccounts).id;
-    return {
-      id: `${i + 7}`,
-      accountId,
-      type: faker.helpers.arrayElement(["debit", "credit"]) as
-        | "debit"
-        | "credit",
-      amount: faker.number.float({ min: -2000, max: 5000, precision: 0.01 }),
-      description: faker.commerce.productName(),
-      category: faker.commerce.department(),
-      date: faker.date.recent({ days: 30 }),
-      pending: faker.datatype.boolean(),
-    };
-  }),
-];
+export const mockTransactions: Transaction[] = mockAccounts.flatMap((account) =>
+  Array.from({ length: 5 }).map((_, i) => ({
+    id: `${account.id}-tx-${i + 1}`,
+    userId: account.userId,
+    accountId: account.id,
+    type: faker.helpers.arrayElement(["debit", "credit"]) as "debit" | "credit",
+    amount: faker.number.float({ min: -2000, max: 5000, precision: 0.01 }),
+    description: faker.commerce.productName(),
+    category: faker.commerce.department(),
+    date: faker.date.recent({ days: 30 }),
+    pending: faker.datatype.boolean(),
+  }))
+);
 
-export const mockGoals: Goal[] = [
-  {
-    id: "1",
-    name: "Emergency Fund",
-    targetAmount: 15000,
-    currentAmount: 8500,
-    targetDate: new Date("2024-12-31"),
-    category: "Emergency",
-  },
-  {
-    id: "2",
-    name: "European Vacation",
-    targetAmount: 5000,
-    currentAmount: 2100,
-    targetDate: new Date("2024-08-15"),
-    category: "Travel",
-  },
-  {
-    id: "3",
-    name: "New Car Down Payment",
-    targetAmount: 8000,
-    currentAmount: 3200,
-    targetDate: new Date("2025-03-01"),
-    category: "Transportation",
-  },
-  ...Array.from({ length: 4 }).map((_, i) => ({
-    id: `${i + 4}`,
+export const mockGoals: Goal[] = mockUsers.flatMap((user) =>
+  Array.from({ length: 2 }).map((_, i) => ({
+    id: `${user.id}-goal-${i + 1}`,
+    userId: user.id,
     name: faker.word.words({ count: { min: 2, max: 4 } }),
     targetAmount: faker.number.int({ min: 1000, max: 20000 }),
     currentAmount: faker.number.int({ min: 0, max: 15000 }),
@@ -190,8 +74,8 @@ export const mockGoals: Goal[] = [
       "Transportation",
       "Leisure",
     ]),
-  })),
-];
+  }))
+);
 
 const allAmenities = [
   "WiFi",

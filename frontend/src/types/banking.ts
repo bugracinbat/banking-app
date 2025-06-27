@@ -1,5 +1,6 @@
 export interface Account {
   id: string;
+  userId: string;
   name: string;
   type: "checking" | "savings" | "credit" | "investment";
   balance: number;
@@ -9,6 +10,7 @@ export interface Account {
 
 export interface Transaction {
   id: string;
+  userId: string;
   accountId: string;
   type: "debit" | "credit";
   amount: number;
@@ -38,6 +40,7 @@ export interface User {
 
 export interface Goal {
   id: string;
+  userId: string;
   name: string;
   targetAmount: number;
   currentAmount: number;
