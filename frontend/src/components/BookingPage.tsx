@@ -1,6 +1,7 @@
 import React from "react";
 import { mockBookings } from "../data/mockData";
 import type { Booking } from "../types/banking";
+import { useUser } from "../context/UserContext";
 import {
   Card,
   CardContent,
@@ -34,9 +35,12 @@ type BookingWithExtras = Booking & {
 };
 
 export function BookingPage() {
+  const { currentUser } = useUser();
   const [search, setSearch] = React.useState("");
   const [type, setType] = React.useState<"flight" | "hotel" | "all">("all");
-  const [filtered, setFiltered] = React.useState<Booking[]>(mockBookings);
+  const [filtered, setFiltered] = React.useState<Booking[]>(
+    mockBookings.filter((b) => b.userId === currentUser.id)
+  );
   const [showSuggestions, setShowSuggestions] = React.useState(false);
   const [suggestions, setSuggestions] = React.useState<string[]>([]);
   const [startDate, setStartDate] = React.useState("");
@@ -73,7 +77,7 @@ export function BookingPage() {
   };
 
   React.useEffect(() => {
-    let results = mockBookings;
+    let results = mockBookings.filter((b) => b.userId === currentUser.id);
     if (type !== "all") results = results.filter((b) => b.type === type);
     if (search)
       results = results.filter((b) =>
@@ -118,6 +122,7 @@ export function BookingPage() {
     minRating,
     selectedAmenities,
     freeCancellation,
+    currentUser,
   ]);
 
   React.useEffect(() => {

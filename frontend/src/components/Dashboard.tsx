@@ -13,7 +13,7 @@ import { PayBills } from "./PayBills";
 import { Invest } from "./Invest";
 import { TransactionDetails } from "./TransactionDetails";
 import { Booking } from "./Booking";
-import { mockAccounts, mockTransactions, mockUser } from "../data/mockData";
+import { mockAccounts, mockTransactions } from "../data/mockData";
 import { formatCurrency, formatDate } from "../lib/utils";
 import {
   CreditCard,
@@ -27,8 +27,10 @@ import {
   MoreHorizontal,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 
 export function Dashboard() {
+  const { currentUser } = useUser();
   const [showBalance, setShowBalance] = React.useState(true);
   const [showTransfer, setShowTransfer] = React.useState(false);
   const [showAddMoney, setShowAddMoney] = React.useState(false);
@@ -38,11 +40,17 @@ export function Dashboard() {
   const [selectedTransaction, setSelectedTransaction] =
     React.useState<any>(null);
 
-  const totalBalance = mockAccounts.reduce(
+  // Filter accounts and transactions by userId if available
+  const userAccounts = mockAccounts.filter((a) => a.id[0] === currentUser.id); // Example: match by id prefix
+  const userTransactions = mockTransactions.filter((t) =>
+    userAccounts.some((a) => a.id === t.accountId)
+  );
+
+  const totalBalance = userAccounts.reduce(
     (sum, account) => sum + account.balance,
     0
   );
-  const recentTransactions = mockTransactions.slice(0, 5);
+  const recentTransactions = userTransactions.slice(0, 5);
   const navigate = useNavigate();
 
   const getAccountIcon = (type: string) => {
@@ -67,7 +75,7 @@ export function Dashboard() {
         {/* Welcome Section */}
         <div className="mb-8 animate-fade-in-up animate-delay-200">
           <h1 className="text-3xl font-bold mb-2 text-white drop-shadow-lg animate-number">
-            Good morning, {mockUser.name.split(" ")[0]}!
+            Good morning, {currentUser.name.split(" ")[0]}!
           </h1>
           <p className="text-white/80 text-lg animate-fade-in animate-delay-300">
             Here's your financial overview for today.
@@ -160,7 +168,7 @@ export function Dashboard() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {mockAccounts.map((account, index) => (
+                  {userAccounts.map((account, index) => (
                     <div
                       key={account.id}
                       className={`flex items-center justify-between p-4 rounded-lg account-${
@@ -262,12 +270,9 @@ export function Dashboard() {
                               : "text-red-300"
                           }`}
                         >
-                          {transaction.type === "credit" ? "+" : ""}
+                          {transaction.type === "credit" ? "+" : "-"}
                           {formatCurrency(Math.abs(transaction.amount))}
                         </p>
-                        {transaction.pending && (
-                          <p className="text-xs text-yellow-300">Pending</p>
-                        )}
                       </div>
                     </div>
                   ))}
@@ -277,8 +282,6 @@ export function Dashboard() {
           </div>
         </div>
       </main>
-
-      {/* Modals */}
       {showTransfer && <Transfer onClose={() => setShowTransfer(false)} />}
       {showAddMoney && <AddMoney onClose={() => setShowAddMoney(false)} />}
       {showPayBills && <PayBills onClose={() => setShowPayBills(false)} />}
